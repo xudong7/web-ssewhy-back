@@ -3,12 +3,11 @@ package com.dunjia.back.controller;
 import com.dunjia.back.pojo.Result;
 import com.dunjia.back.pojo.User;
 import com.dunjia.back.service.UserService;
+import com.dunjia.back.utils.JwtUtil;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +17,19 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    /**
+     * 登录
+     * @param user
+     */
+    @PostMapping("/login")
+    public Result login(@RequestBody User user) {
+        if (userService.login(user.getUsername(), user.getPassword())) {
+            String token = JwtUtil.createToken();
+            return Result.success(token);
+        }
+        return Result.error("登录失败");
+    }
 
     /**
      * 根据id查询用户

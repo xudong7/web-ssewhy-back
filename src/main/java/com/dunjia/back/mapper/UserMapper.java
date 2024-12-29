@@ -14,4 +14,7 @@ public interface UserMapper {
 
     @Select("select * from users")
     List<User> getUserList();
+
+    @Select("select * from users where username = #{username} and password = #{password}")
+    User getUserByUsernameAndPassword(String username, String password);
 }

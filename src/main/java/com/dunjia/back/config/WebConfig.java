@@ -1,10 +1,14 @@
 package com.dunjia.back.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.dunjia.back.utils.JwtInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -12,6 +16,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${imagepath}")
     private String imagePath;//从配置文件中获取文件路径
 
+    @Autowired
+    private JwtInterceptor jwtInterceptor;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -27,4 +33,16 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/image/**")
                 .addResourceLocations("file:" + imagePath);//file:表示协议头，不可更改
     }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(jwtInterceptor)
+                .addPathPatterns("/api/**")  // 拦截所有/api/**的请求
+                .excludePathPatterns(        // 不拦截以下路径
+                        "/api/login",        // 登录接口
+                        "/api/register",     // 注册接口
+                        "/image/**"          // 静态资源
+                );
+    }
+
 }

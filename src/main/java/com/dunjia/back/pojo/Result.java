@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 public class Result {
     private Integer code; // 1 - success 0 - fail
-    private String message;
+    private String msg;
     private Object data;
 
     // 增删改 成功

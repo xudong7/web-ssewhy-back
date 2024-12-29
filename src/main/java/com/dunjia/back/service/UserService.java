@@ -19,5 +19,10 @@ public class UserService {
     public List<User> getUserList() {
         return userMapper.getUserList();
     }
+
+    public boolean login(String username, String password) {
+        User user = userMapper.getUserByUsernameAndPassword(username, password);
+        return user != null;
+    }
 }
     
