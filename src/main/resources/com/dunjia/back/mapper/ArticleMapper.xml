@@ -4,14 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dunjia.back.mapper.ArticleMapper">
     <insert id="addArticle">
-        insert into articles (title, content, create_time, update_time, status)
-        values (#{title}, #{content}, #{createTime}, #{updateTime}, #{status})
+        insert into articles (title, content, cover, create_time, update_time, status)
+        values (#{title}, #{content}, #{cover}, #{createTime}, #{updateTime}, #{status})
     </insert>
     <update id="updateArticle">
         update articles
         <set>
             <if test="title != null">title = #{title},</if>
             <if test="content != null">content = #{content},</if>
+            <if test="cover != null">cover = #{cover},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="status != null">status = #{status}</if>
         </set>

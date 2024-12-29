@@ -50,7 +50,6 @@ public class ArticleController {
     @PostMapping("/article")
     public Result addArticle(@RequestBody Article article) {
         log.info("新增文章: {}", article);
-        log.info("状态: {}", article.getStatus());
         articleService.addArticle(article);
         return Result.success();
     }
