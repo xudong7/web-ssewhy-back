@@ -21,7 +21,7 @@ public class JwtUtil {
                 // payload
                 .claim("username", "admin")
                 .claim("password", "admin")
-                .setSubject("admin-test")
+                .setSubject("jwt-token")
                 .setExpiration(new Date(System.currentTimeMillis() + time))
                 .setId(UUID.randomUUID().toString())
                 // signature

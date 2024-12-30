@@ -17,4 +17,8 @@ public interface UserMapper {
 
     @Select("select * from users where username = #{username} and password = #{password}")
     User getUserByUsernameAndPassword(String username, String password);
+
+    void insertUser(User user);
+
+    void updateUser(User user);
 }

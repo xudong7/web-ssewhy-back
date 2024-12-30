@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -24,11 +25,36 @@ public class UserController {
      */
     @PostMapping("/login")
     public Result login(@RequestBody User user) {
-        if (userService.login(user.getUsername(), user.getPassword())) {
+        Integer id = userService.login(user.getUsername(), user.getPassword());
+        // 返回用户id和token
+        if (id != null) {
             String token = JwtUtil.createToken();
-            return Result.success(token);
+            return Result.success(Map.of("id", id, "token", token));
         }
         return Result.error("登录失败");
+    }
+
+    /**
+     * 注册 添加用户
+     * @param user
+     */
+    @PostMapping("/register")
+    public Result register(@RequestBody User user) {
+        log.info("注册用户: {}", user);
+        // 注册用户
+        userService.register(user);
+        return Result.success("注册成功");
+    }
+
+    /**
+     * 修改用户信息
+     * @param user
+     */
+    @PutMapping("/user")
+    public Result updateUser(@RequestBody User user) {
+        log.info("修改用户信息: {}", user);
+        userService.updateUser(user);
+        return Result.success("修改成功");
     }
 
     /**
