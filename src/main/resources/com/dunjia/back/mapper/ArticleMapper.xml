@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dunjia.back.mapper.ArticleMapper">
     <insert id="addArticle">
-        insert into articles (title, content, cover, create_time, update_time, status)
-        values (#{title}, #{content}, #{cover}, #{createTime}, #{updateTime}, #{status})
+        insert into articles (user_id, title, content, cover, create_time, update_time, status)
+        values (#{userId}, #{title}, #{content}, #{cover}, #{createTime}, #{updateTime}, #{status})
     </insert>
     <update id="updateArticle">
         update articles
