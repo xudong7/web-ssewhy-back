@@ -1,6 +1,7 @@
 package com.dunjia.back.mapper;
 
 import com.dunjia.back.pojo.User;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -21,4 +22,7 @@ public interface UserMapper {
     void insertUser(User user);
 
     void updateUser(User user);
+
+    @Delete("delete from users where id = #{id}")
+    void deleteUser(Integer id);
 }

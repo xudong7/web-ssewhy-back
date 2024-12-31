@@ -82,4 +82,16 @@ public class UserController {
         List<User> users = userService.getUserList();
         return Result.success(users);
     }
+
+    /**
+     * 删除特定id的用户
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/user/{id}")
+    public Result deleteUser(@PathVariable Integer id) {
+        log.info("删除用户id: {}", id);
+        userService.deleteUser(id);
+        return Result.success("删除成功");
+    }
 }

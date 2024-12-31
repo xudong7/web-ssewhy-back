@@ -36,5 +36,9 @@ public class UserService {
         user.setUpdateTime(LocalDateTime.now());
         userMapper.updateUser(user);
     }
+
+    public void deleteUser(Integer id) {
+        userMapper.deleteUser(id);
+    }
 }
     

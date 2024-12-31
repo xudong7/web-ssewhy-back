@@ -31,4 +31,12 @@ public class ArticleService {
         article.setUpdateTime(LocalDateTime.now());
         articleMapper.updateArticle(article);
     }
+
+    public void deleteArticle(Integer id) {
+        articleMapper.deleteArticle(id);
+    }
+
+    public void deleteAllArticle() {
+        articleMapper.deleteAllArticle();
+    }
 }

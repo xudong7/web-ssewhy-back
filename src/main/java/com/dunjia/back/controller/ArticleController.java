@@ -65,4 +65,27 @@ public class ArticleController {
         articleService.updateArticle(article);
         return Result.success();
     }
+
+    /**
+     * 删除特定id的文章
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/article/{id}")
+    public Result deleteArticle(@PathVariable Integer id) {
+        log.info("删除文章id: {}", id);
+        articleService.deleteArticle(id);
+        return Result.success();
+    }
+
+    /**
+     * 删除全部文章
+     * @return
+     */
+    @DeleteMapping("/article")
+    public Result deleteAllArticle() {
+        log.info("删除全部文章");
+        articleService.deleteAllArticle();
+        return Result.success();
+    }
 }
