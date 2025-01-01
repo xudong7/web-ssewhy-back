@@ -39,4 +39,27 @@ public class ArticleService {
     public void deleteAllArticle() {
         articleMapper.deleteAllArticle();
     }
+
+    public boolean like(Integer articleId, Integer userId) {
+        Article article = articleMapper.getArticleById(articleId);
+        String likesCart = article.getLikesCart();
+        // 判断是否为空
+        if (likesCart == null) {
+            likesCart = "";
+        }
+        // 点赞
+        if (!likesCart.contains(userId + ",")) {
+            likesCart += userId + ",";
+            article.setLikesCart(likesCart);
+            articleMapper.updateArticle(article);
+            return true;
+        }
+        // 取消点赞
+        else {
+            likesCart = likesCart.replace(userId + ",", "");
+            article.setLikesCart(likesCart);
+            articleMapper.updateArticle(article);
+            return false;
+        }
+    }
 }

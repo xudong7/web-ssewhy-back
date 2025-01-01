@@ -22,4 +22,7 @@ public class Article {
     private Integer likes; // 点赞
     private Integer marks; // 收藏
     private Integer comments; // 评论
+    private String likesCart; // 点赞用户id集合
+    private String marksCart; // 收藏用户id集合
+    private String commentsCart; // 评论用户id集合
 }

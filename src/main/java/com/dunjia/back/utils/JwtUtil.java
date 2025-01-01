@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class JwtUtil {
 
-    private static long time = 1000 * 60 * 60; // 1 hour
+    private static long time = 1000 * 60 * 60 * 24; // 24 hour
     private static String signature = "dunjia";
 
     public static String createToken() {

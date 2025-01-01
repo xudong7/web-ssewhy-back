@@ -88,4 +88,16 @@ public class ArticleController {
         articleService.deleteAllArticle();
         return Result.success();
     }
+
+    /**
+     * 处理喜欢
+     * @param articleId userId
+     * @return
+     */
+    @PostMapping("/article/like")
+    public Result addLike(@RequestParam Integer articleId, @RequestParam Integer userId) {
+        log.info("添加到喜欢: articleId: {}, userId: {}", articleId, userId);
+        boolean ifLike = articleService.like(userId, articleId);
+        return Result.success(ifLike);
+    }
 }

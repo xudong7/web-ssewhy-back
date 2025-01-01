@@ -40,5 +40,28 @@ public class UserService {
     public void deleteUser(Integer id) {
         userMapper.deleteUser(id);
     }
+
+    public boolean collect(Integer userId, Integer articleId) {
+        User user = userMapper.getUserById(userId);
+        String markCart = user.getMarkCart();
+        // 判断是否为空
+        if (markCart == null) {
+            markCart = "";
+        }
+        // 收藏
+        if (!markCart.contains(articleId + ",")) {
+            markCart += articleId + ",";
+            user.setMarkCart(markCart);
+            userMapper.updateUser(user);
+            return true;
+        }
+        // 取消收藏
+        else {
+            markCart = markCart.replace(articleId + ",", "");
+            user.setMarkCart(markCart);
+            userMapper.updateUser(user);
+            return false;
+        }
+    }
 }
     

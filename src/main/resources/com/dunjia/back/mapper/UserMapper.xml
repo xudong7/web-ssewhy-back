@@ -13,6 +13,7 @@
         <set>
             <if test="avatar != null">avatar = #{avatar},</if>
             <if test="cover != null">cover = #{cover},</if>
+            <if test="markCart != null">markCart = #{markCart},</if>
             update_time = #{updateTime}
         </set>
         where id = #{id}

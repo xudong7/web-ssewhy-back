@@ -14,7 +14,8 @@
             <if test="content != null">content = #{content},</if>
             <if test="cover != null">cover = #{cover},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
-            <if test="status != null">status = #{status}</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="likesCart != null">likesCart = #{likesCart}</if>
         </set>
         where id = #{id}
     </update>

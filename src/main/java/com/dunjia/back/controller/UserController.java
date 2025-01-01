@@ -94,4 +94,16 @@ public class UserController {
         userService.deleteUser(id);
         return Result.success("删除成功");
     }
+
+    /**
+     * 处理收藏夹
+     * @param userId, articleId
+     * @return
+     */
+    @PostMapping("/user/collect")
+    public Result collect(@RequestParam Integer userId, @RequestParam Integer articleId) {
+        log.info("用户id: {} 添加收藏文章id: {}", userId, articleId);
+        boolean ifCollect = userService.collect(userId, articleId);
+        return Result.success(ifCollect);
+    }
 }
