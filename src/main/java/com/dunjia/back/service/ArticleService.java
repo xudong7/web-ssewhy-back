@@ -64,4 +64,13 @@ public class ArticleService {
             return false;
         }
     }
+
+    public List<Article> searchArticle(String keyword) {
+        List<Article> articles = articleMapper.getArticleList();
+        articles.removeIf(article -> !article.getTitle().contains(keyword));
+        // content模糊搜索 同时content里的img的路径不能被搜索到
+        articles.removeIf(article -> !article.getContent().contains(keyword)
+                || article.getContent().contains("src=\"" + keyword));
+        return articles;
+    }
 }

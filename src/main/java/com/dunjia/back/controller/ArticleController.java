@@ -43,6 +43,18 @@ public class ArticleController {
     }
 
     /**
+     * 模糊查询文章
+     * @param keyword
+     * @return
+     */
+    @GetMapping("/article/search")
+    public Result searchArticle(@RequestParam String keyword) {
+        log.info("模糊查询文章: {}", keyword);
+        List<Article> articles = articleService.searchArticle(keyword);
+        return Result.success(articles);
+    }
+
+    /**
      * 新增文章
      * @param article
      * @return

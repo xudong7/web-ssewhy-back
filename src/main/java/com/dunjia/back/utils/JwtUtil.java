@@ -12,6 +12,10 @@ public class JwtUtil {
     private static long time = 1000 * 60 * 60 * 24; // 24 hour
     private static String signature = "dunjia";
 
+    /**
+     * 生成token
+     * @return
+     */
     public static String createToken() {
         JwtBuilder jwtBuilder = Jwts.builder();
         String jwtToken = jwtBuilder
@@ -30,6 +34,11 @@ public class JwtUtil {
         return jwtToken;
     }
 
+    /**
+     * 校验token
+     * @param token
+     * @return
+     */
     public static boolean verifyToken(String token) {
         if (token == null) {
             return false;

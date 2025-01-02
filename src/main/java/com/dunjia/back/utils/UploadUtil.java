@@ -16,6 +16,12 @@ public class UploadUtil {
     @Value("${serverforimagepath}")
     private String serverforimagepath;
 
+    /**
+     * 上传图片到本地
+     * @param image
+     * @return
+     * @throws IOException
+     */
     public String localUpload(MultipartFile image) throws IOException {
         // 将前端传来的图片存到本地(如果没有文件夹，则创建一个)，同时将图片在本地的路径返回，使用/image/**访问
         String originalFilename = image.getOriginalFilename();
