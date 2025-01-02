@@ -53,10 +53,10 @@ public class UserService {
         String markCart = user.getMarkCart();
         // 判断是否为空
         if (markCart == null) {
-            markCart = "";
+            markCart = ",";
         }
         // 收藏
-        if (!markCart.contains(articleId + ",")) {
+        if (!markCart.contains("," + articleId + ",")) {
             markCart += articleId + ",";
             user.setMarkCart(markCart);
             article.setMarks(article.getMarks() + 1);

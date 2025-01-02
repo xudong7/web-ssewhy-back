@@ -45,10 +45,10 @@ public class ArticleService {
         String likesCart = article.getLikesCart();
         // 判断是否为空
         if (likesCart == null) {
-            likesCart = "";
+            likesCart = ",";
         }
         // 点赞
-        if (!likesCart.contains(userId + ",")) {
+        if (!likesCart.contains("," + userId + ",")) {
             likesCart += userId + ",";
             article.setLikesCart(likesCart);
             article.setLikes(article.getLikes() + 1);
