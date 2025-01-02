@@ -51,6 +51,7 @@ public class ArticleService {
         if (!likesCart.contains(userId + ",")) {
             likesCart += userId + ",";
             article.setLikesCart(likesCart);
+            article.setLikes(article.getLikes() + 1);
             articleMapper.updateArticle(article);
             return true;
         }
@@ -58,6 +59,7 @@ public class ArticleService {
         else {
             likesCart = likesCart.replace(userId + ",", "");
             article.setLikesCart(likesCart);
+            article.setLikes(article.getLikes() - 1);
             articleMapper.updateArticle(article);
             return false;
         }

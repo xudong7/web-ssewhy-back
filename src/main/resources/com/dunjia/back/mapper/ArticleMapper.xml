@@ -15,6 +15,8 @@
             <if test="cover != null">cover = #{cover},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="status != null">status = #{status},</if>
+            <if test="marks != null">marks = #{marks},</if>
+            <if test="likes != null">likes = #{likes},</if>
             <if test="likesCart != null">likesCart = #{likesCart}</if>
         </set>
         where id = #{id}

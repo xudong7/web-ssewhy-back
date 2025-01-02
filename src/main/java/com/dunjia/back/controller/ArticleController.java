@@ -97,7 +97,7 @@ public class ArticleController {
     @PostMapping("/article/like")
     public Result addLike(@RequestParam Integer articleId, @RequestParam Integer userId) {
         log.info("添加到喜欢: articleId: {}, userId: {}", articleId, userId);
-        boolean ifLike = articleService.like(userId, articleId);
+        boolean ifLike = articleService.like(articleId, userId);
         return Result.success(ifLike);
     }
 }

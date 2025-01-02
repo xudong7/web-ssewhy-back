@@ -1,7 +1,10 @@
 package com.dunjia.back.service;
 
+import com.dunjia.back.mapper.ArticleMapper;
 import com.dunjia.back.mapper.UserMapper;
+import com.dunjia.back.pojo.Article;
 import com.dunjia.back.pojo.User;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserMapper userMapper;
+
+    @Resource
+    private ArticleMapper articleMapper;
 
     public User getUserById(Integer id) {
         return userMapper.getUserById(id);
@@ -43,6 +49,7 @@ public class UserService {
 
     public boolean collect(Integer userId, Integer articleId) {
         User user = userMapper.getUserById(userId);
+        Article article = articleMapper.getArticleById(articleId);
         String markCart = user.getMarkCart();
         // 判断是否为空
         if (markCart == null) {
@@ -52,6 +59,8 @@ public class UserService {
         if (!markCart.contains(articleId + ",")) {
             markCart += articleId + ",";
             user.setMarkCart(markCart);
+            article.setMarks(article.getMarks() + 1);
+            articleMapper.updateArticle(article);
             userMapper.updateUser(user);
             return true;
         }
@@ -59,6 +68,8 @@ public class UserService {
         else {
             markCart = markCart.replace(articleId + ",", "");
             user.setMarkCart(markCart);
+            article.setMarks(article.getMarks() - 1);
+            articleMapper.updateArticle(article);
             userMapper.updateUser(user);
             return false;
         }
