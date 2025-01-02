@@ -45,11 +45,11 @@ public class ArticleService {
         String likesCart = article.getLikesCart();
         // 判断是否为空
         if (likesCart == null) {
-            likesCart = ",";
+            likesCart = "";
         }
         // 点赞
         if (!likesCart.contains("," + userId + ",")) {
-            likesCart += userId + ",";
+            likesCart += "," + userId + ",";
             article.setLikesCart(likesCart);
             article.setLikes(article.getLikes() + 1);
             articleMapper.updateArticle(article);
@@ -57,7 +57,7 @@ public class ArticleService {
         }
         // 取消点赞
         else {
-            likesCart = likesCart.replace(userId + ",", "");
+            likesCart = likesCart.replace("," + userId + ",", "");
             article.setLikesCart(likesCart);
             article.setLikes(article.getLikes() - 1);
             articleMapper.updateArticle(article);

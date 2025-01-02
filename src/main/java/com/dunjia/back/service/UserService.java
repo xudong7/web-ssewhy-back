@@ -53,11 +53,11 @@ public class UserService {
         String markCart = user.getMarkCart();
         // 判断是否为空
         if (markCart == null) {
-            markCart = ",";
+            markCart = "";
         }
         // 收藏
         if (!markCart.contains("," + articleId + ",")) {
-            markCart += articleId + ",";
+            markCart += "," + articleId + ",";
             user.setMarkCart(markCart);
             article.setMarks(article.getMarks() + 1);
             articleMapper.updateArticle(article);
@@ -66,7 +66,7 @@ public class UserService {
         }
         // 取消收藏
         else {
-            markCart = markCart.replace(articleId + ",", "");
+            markCart = markCart.replace("," + articleId + ",", "");
             user.setMarkCart(markCart);
             article.setMarks(article.getMarks() - 1);
             articleMapper.updateArticle(article);
