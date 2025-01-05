@@ -106,4 +106,16 @@ public class UserController {
         boolean ifCollect = userService.collect(userId, articleId);
         return Result.success(ifCollect);
     }
+
+    /**
+     * 处理粉丝cart user被fan关注
+     * @param userId, fanId
+     * @return
+     */
+    @PostMapping("/user/fan")
+    public Result fan(@RequestParam Integer userId, @RequestParam Integer fanId) {
+        log.info("用户id: {} 添加粉丝id: {}", userId, fanId);
+        boolean ifFan = userService.fan(userId, fanId);
+        return Result.success(ifFan);
+    }
 }

@@ -14,6 +14,8 @@
             <if test="avatar != null">avatar = #{avatar},</if>
             <if test="cover != null">cover = #{cover},</if>
             <if test="markCart != null">markCart = #{markCart},</if>
+            <if test="fansCart != null">fansCart = #{fansCart},</if>
+            <if test="followCart != null">followCart = #{followCart},</if>
             update_time = #{updateTime}
         </set>
         where id = #{id}

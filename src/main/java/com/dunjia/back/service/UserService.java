@@ -74,5 +74,41 @@ public class UserService {
             return false;
         }
     }
+
+    public boolean fan(Integer userId, Integer fanId) {
+        User user = userMapper.getUserById(userId);
+        User fan = userMapper.getUserById(fanId);
+        String followCart = fan.getFollowCart();
+        String fanCart = user.getFansCart();
+        // 判断是否为空
+        if (fanCart == null) {
+            fanCart = "";
+        }
+        if (followCart == null) {
+            followCart = "";
+        }
+        // 关注
+        if (!fanCart.contains("," + fanId + ",")) {
+            fanCart += "," + fanId + ",";
+            user.setFansCart(fanCart);
+            // fan的followCart也要更新
+            followCart += "," + userId + ",";
+            fan.setFollowCart(followCart);
+            userMapper.updateUser(fan);
+            userMapper.updateUser(user);
+            return true;
+        }
+        // 取消关注
+        else {
+            fanCart = fanCart.replace("," + fanId + ",", "");
+            user.setFansCart(fanCart);
+            // fan的followCart也要更新
+            followCart = followCart.replace("," + userId + ",", "");
+            fan.setFollowCart(followCart);
+            userMapper.updateUser(fan);
+            userMapper.updateUser(user);
+            return false;
+        }
+    }
 }
     
