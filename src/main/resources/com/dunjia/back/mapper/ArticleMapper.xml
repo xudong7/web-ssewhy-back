@@ -17,6 +17,7 @@
             <if test="status != null">status = #{status},</if>
             <if test="marks != null">marks = #{marks},</if>
             <if test="likes != null">likes = #{likes},</if>
+            <if test="comments != null">comments = #{comments},</if>
             <if test="likesCart != null">likesCart = #{likesCart}</if>
         </set>
         where id = #{id}

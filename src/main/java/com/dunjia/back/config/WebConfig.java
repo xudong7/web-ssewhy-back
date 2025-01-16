@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  // 所有的 API 路径都允许跨域请求
-                .allowedOrigins("http://localhost:5173", "http://127.0.0.1:5173")  // 允许来自 Vue.js 前端（5173）的请求
+                .allowedOrigins("http://localhost:5173", "http://127.0.0.1:5173", "http://8.134.51.50:5173")  // 允许来自 Vue.js 前端（5173）的请求
                 .allowedMethods("GET", "POST", "PUT", "DELETE")  // 允许的 HTTP 请求方法
                 .allowedHeaders("*")  // 允许所有的请求头
                 .allowCredentials(true);  // 允许发送 Cookie 和认证信息
@@ -41,6 +41,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns(        // 不拦截以下路径
                         "/api/login",        // 登录接口
                         "/api/register",     // 注册接口
+                        "/api/upload",       // 上传图片接口
                         "/image/**"          // 静态资源
                 );
     }

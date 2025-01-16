@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dunjia.back.mapper.ChatMapper">
+    <!-- 消息相关 -->
+    <insert id="insertMessage" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO message (sent_id, received_id, content, msg_type, file_url, file_name, file_size, is_group, status, create_time)
+        VALUES (#{sentId}, #{receivedId}, #{content}, #{msgType}, #{fileUrl}, #{fileName}, #{fileSize}, #{isGroup}, #{status}, #{createTime})
+    </insert>
+    
+    <select id="selectChatHistory" resultType="com.dunjia.back.pojo.Message">
+        SELECT *
+        FROM message
+        WHERE (sent_id = #{sentId} AND received_id = #{receivedId})
+           OR (sent_id = #{receivedId} AND received_id = #{sentId})
+        ORDER BY create_time ASC
+    </select>
+    
+    <update id="updateMessageStatus">
+        UPDATE message
+        SET status = #{status}
+        WHERE id = #{id}
+    </update>
+    
+    <update id="updateMessagesRead">
+        UPDATE message
+        SET status = 2
+        WHERE sent_id = #{targetId} AND received_id = #{userId} AND status = 1
+    </update>
+    
+    <!-- 会话相关 -->
+    <select id="selectChatList" resultType="com.dunjia.back.pojo.ChatSession">
+        SELECT cs.*, 
+               CASE 
+                   WHEN cs.is_group = true THEN g.name
+                   ELSE u.username
+               END as target_name,
+               CASE 
+                   WHEN cs.is_group = true THEN g.avatar
+                   ELSE u.avatar
+               END as target_avatar
+        FROM chat_session cs
+        LEFT JOIN user u ON (cs.is_group = false AND cs.target_id = u.id)
+        LEFT JOIN chat_group g ON (cs.is_group = true AND cs.target_id = g.id)
+        WHERE cs.user_id = #{userId}
+        ORDER BY cs.update_time DESC
+    </select>
+    
+    <select id="selectSession" resultType="com.dunjia.back.pojo.ChatSession">
+        SELECT *
+        FROM chat_session
+        WHERE user_id = #{userId} AND target_id = #{targetId}
+    </select>
+    
+    <insert id="insertSession" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO chat_session (user_id, target_id, is_group, last_message, unread_count, create_time, update_time)
+        VALUES (#{userId}, #{targetId}, #{isGroup}, #{lastMessage}, #{unreadCount}, #{createTime}, #{updateTime})
+    </insert>
+    
+    <update id="updateSession">
+        UPDATE chat_session
+        SET last_message = #{lastMessage},
+            unread_count = #{unreadCount},
+            update_time = #{updateTime}
+        WHERE id = #{id}
+    </update>
+    
+    <update id="incrementUnreadCount">
+        UPDATE chat_session
+        SET unread_count = unread_count + 1
+        WHERE user_id = #{userId} AND target_id = #{targetId}
+    </update>
+    
+    <update id="clearUnreadCount">
+        UPDATE chat_session
+        SET unread_count = 0
+        WHERE user_id = #{userId} AND target_id = #{targetId}
+    </update>
+    
+    <!-- 群组相关 -->
+    <insert id="insertGroup" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO chat_group (name, avatar, owner_id, description, create_time, update_time)
+        VALUES (#{name}, #{avatar}, #{ownerId}, #{description}, #{createTime}, #{updateTime})
+    </insert>
+    
+    <update id="updateGroup">
+        UPDATE chat_group
+        SET name = #{name},
+            avatar = #{avatar},
+            description = #{description},
+            update_time = #{updateTime}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteGroup">
+        DELETE FROM chat_group WHERE id = #{groupId}
+    </delete>
+    
+    <select id="selectGroupMembers" resultType="com.dunjia.back.pojo.GroupMember">
+        SELECT gm.*, u.username, u.avatar
+        FROM group_member gm
+        LEFT JOIN user u ON gm.user_id = u.id
+        WHERE gm.group_id = #{groupId}
+    </select>
+    
+    <insert id="insertGroupMember" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO group_member (group_id, user_id, nickname, role, join_time)
+        VALUES (#{groupId}, #{userId}, #{nickname}, #{role}, #{joinTime})
+    </insert>
+    
+    <update id="updateGroupMember">
+        UPDATE group_member
+        SET nickname = #{nickname},
+            role = #{role}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteGroupMember">
+        DELETE FROM group_member
+        WHERE group_id = #{groupId} AND user_id = #{userId}
+    </delete>
+    
+    <delete id="deleteGroupMembers">
+        DELETE FROM group_member WHERE group_id = #{groupId}
+    </delete>
+</mapper> 

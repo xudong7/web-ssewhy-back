@@ -1,7 +1,10 @@
 package com.dunjia.back.service;
 
+import com.dunjia.back.mapper.ArticleMapper;
 import com.dunjia.back.mapper.CommentMapper;
+import com.dunjia.back.pojo.Article;
 import com.dunjia.back.pojo.Comment;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,8 @@ import java.util.List;
 public class CommentService {
     @Autowired
     private CommentMapper commentMapper;
+    @Resource
+    private ArticleMapper articleMapper;
 
     public List<Comment> getAllComments() {
         return commentMapper.getAllComments();
@@ -26,6 +31,9 @@ public class CommentService {
     public void addComment(Comment comment) {
         comment.setCreateTime(LocalDateTime.now());
         comment.setUpdateTime(LocalDateTime.now());
+        Article article = articleMapper.getArticleById(comment.getArticleId());
+        article.setComments(article.getComments() + 1);
+        articleMapper.updateArticle(article);
         commentMapper.addComment(comment);
     }
 }
